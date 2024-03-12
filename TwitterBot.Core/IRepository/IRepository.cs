@@ -13,6 +13,7 @@ namespace TwitterBot.Core.Interfaces
         IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? indcludeProperties = null);
         void Add(T entity);
         void Remove(T entity);
+        T GetLastOrDefualt(Expression<Func<T, bool>> filter, string? indcludeProperties = null, bool tracked = true);
         void RemoveRange(IEnumerable<T> entities);
 
     }

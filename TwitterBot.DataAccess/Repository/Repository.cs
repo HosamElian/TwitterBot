@@ -61,7 +61,28 @@ namespace TwitterBot.DataAccess.Repository
             }
             return query.FirstOrDefault();
         }
+        public T GetLastOrDefualt(Expression<Func<T, bool>> filter, string? indcludeProperties = null, bool tracked = true)
+        {
+            IQueryable<T> query;
+            if (tracked)
+            {
+                query = dbSet;
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
 
+            }
+            query = query.Where(filter);
+            if (indcludeProperties != null)
+            {
+                foreach (var includeProp in indcludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.LastOrDefault();
+        }
         public void Remove(T entity)
         {
             dbSet.Remove(entity);

@@ -252,7 +252,7 @@ namespace TwitterBot.DataAccess.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("TwitterBot.Core.Models.News", b =>
@@ -305,7 +305,7 @@ namespace TwitterBot.DataAccess.Migrations
 
                     b.HasIndex("ParaphrasedById");
 
-                    b.ToTable("Newses");
+                    b.ToTable("Newses", (string)null);
                 });
 
             modelBuilder.Entity("TwitterBot.Core.Models.Post", b =>
@@ -336,7 +336,7 @@ namespace TwitterBot.DataAccess.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("TwitterBot.Core.Models.ApplicationUser", b =>

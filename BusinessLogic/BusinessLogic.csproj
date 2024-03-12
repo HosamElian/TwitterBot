@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
     <PackageReference Include="NewsAPI" Version="0.7.0" />
     <PackageReference Include="Standard.AI.OpenAI" Version="0.6.0" />
+    <PackageReference Include="TweetinviAPI" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TwitterBot.Core\TwitterBot.Core.csproj" />
+    <ProjectReference Include="..\TwitterBot.DataAccess\TwitterBot.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

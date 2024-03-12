@@ -1,18 +1,19 @@
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using TwitterBot.Core.IServices;
 using TwitterBot.DataAccess.Data;
+using TwitterBot.Web.Extensions;
+using Twkelat.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddApplicationService(builder.Configuration);
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
@@ -27,13 +28,23 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseHttpsRedirection();
+app.UseCors(builder => builder
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin());
+//app.UseHttpsRedirection();
+app.UseHangfireDashboard();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+
+
+RecurringJob.AddOrUpdate<ISchedulerService>("Run Every 30 minutes", a => a.Run(), Cron.Minutely());
 
 app.MapControllerRoute(
     name: "default",
