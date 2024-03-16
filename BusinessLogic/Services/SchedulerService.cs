@@ -33,9 +33,9 @@ namespace BusinessLogic.Services
         {
             var newsFromAPI = _newsService.GetAllNews(new EverythingRequest
             {
+                Q = "kuwait",
                 SortBy = SortBys.Popularity,
                 Language = Languages.AR,
-                From = DateTime.Now.AddHours(-30),
             });
 
             if (newsFromAPI == null) return;

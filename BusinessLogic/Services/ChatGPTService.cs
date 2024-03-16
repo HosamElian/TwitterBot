@@ -11,12 +11,11 @@ namespace BusinessLogic.Services
         {
             var openAIConfigurations = new OpenAIConfigurations
             {
-                ApiKey = "apiKey",
+                ApiKey = "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",
                 OrganizationId = "organizationId"
             };
 
             openAIClient = new OpenAIClient(openAIConfigurations);
-
             _messages = new();
         }
         //Where business happens
