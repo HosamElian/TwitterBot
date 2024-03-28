@@ -1,14 +1,7 @@
 ﻿using NewsAPI.Constants;
 using NewsAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TwitterBot.Core.IRepository;
 using TwitterBot.Core.IServices;
-using TwitterBot.Core.Models;
-using TwitterBot.Core.NoDbModels;
 
 namespace BusinessLogic.Services
 {
@@ -29,21 +22,21 @@ namespace BusinessLogic.Services
             _twitterHandlerService = twitterHandlerService;
             _unitOfWork = unitOfWork;
         }
+
         public void Run()
         {
-            var newsFromAPI = _newsService.GetAllNews(new EverythingRequest
+            return;
+            _newsService.GetAllNewsFromApi(new EverythingRequest
             {
                 Q = "kuwait",
                 SortBy = SortBys.Popularity,
-                Language = Languages.AR,
+                Language = Languages.EN,
             });
 
-            if (newsFromAPI == null) return;
-            //Make Decision
-            //save data
-            var news = _unitOfWork.NewsRepository.GetLastOrDefualt(c => c.IsApproved && c.DecisionTime > DateTime.UtcNow.AddHours(5));
-            var formattednews = _chatGPTService.SendChatMessage(news.OriganalNews).Result.Select(x => x.Content).ToList();
-            var IsOntwitter = _twitterHandlerService.PostTweet(new PostTweetRequestDto { Text = formattednews.FirstOrDefault()  ?? ""});
+
+            var newsFromDB = _unitOfWork.NewsRepository.GetAll(c => !c.IsApproved && !c.IsExpired);
+            if (newsFromDB == null) return;
+            var formattednews = _chatGPTService.SendChatMessage(newsFromDB).Result;
         }
     }
 }

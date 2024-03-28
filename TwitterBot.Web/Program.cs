@@ -28,6 +28,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(builder => builder
@@ -44,7 +45,7 @@ app.UseAuthorization();
 
 
 
-RecurringJob.AddOrUpdate<ISchedulerService>("Run Every 30 minutes", a => a.Run(), Cron.Minutely());
+RecurringJob.AddOrUpdate<ISchedulerService>("Run Every 30 minutes", a => a.Run(), Cron.MinuteInterval(30));
 
 app.MapControllerRoute(
     name: "default",

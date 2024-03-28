@@ -9,8 +9,8 @@ namespace TwitterBot.Core
     public static class Shared
     {
         // Roles
-        public static readonly string Role_Admin = "Admin";
-        public static readonly string Role_User = "User";
-        public static readonly string Role_NewsReviewer = "NewsReviewer";
+        public const string Role_Admin = "Admin";
+        public const string Role_User = "User";
+        public const string Role_NewsReviewer = "NewsReviewer";
     }
 }

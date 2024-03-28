@@ -25,6 +25,11 @@ namespace TwitterBot.DataAccess.Repository
             dbSet.Add(entity);
         }
 
+        public void AddRange(IEnumerable<T> entities)
+        {
+            dbSet.AddRange(entities);
+        }
+
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? indcludeProperties = null)
         {
             IQueryable<T> query = dbSet;

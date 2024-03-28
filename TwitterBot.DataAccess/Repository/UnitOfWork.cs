@@ -18,5 +18,10 @@ namespace TwitterBot.DataAccess.Repository
             NewsRepository = new NewsRepository(_context);
         }
         public INewsRepository NewsRepository { get; private set; }
+
+        public bool SaveChanges()
+        {
+            return _context.SaveChanges() > 0;
+        }
     }
 }

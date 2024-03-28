@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TwitterBot.Core;
 using TwitterBot.Web.Models;
 
 namespace TwitterBot.Web.Areas.Customer.Controllers
@@ -18,7 +20,6 @@ namespace TwitterBot.Web.Areas.Customer.Controllers
         {
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TwitterBot.Core.Models;
 using NewsAPI.Models;
+using System.Linq.Expressions;
+using TwitterBot.Web.Areas.NewsReviewer.ViewModel;
 namespace TwitterBot.Core.IServices
 {
     public interface INewsService
     {
-        public IEnumerable<Article>? GetAllNews(EverythingRequest newsRequest);
+        public void GetAllNewsFromApi(EverythingRequest newsRequest);
+        public IEnumerable<NewsVM>? GetAllNewsFromDb(Expression<Func<News, bool>> filter);
     }
 }
