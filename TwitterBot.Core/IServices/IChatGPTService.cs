@@ -5,5 +5,7 @@ namespace TwitterBot.Core.IServices
     public interface IChatGPTService
     {
         Task<bool> SendChatMessage(IEnumerable<News> news);
+        Task<bool> SendChatMessage(News news);
+
     }
 }

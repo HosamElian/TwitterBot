@@ -1,7 +1,9 @@
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TwitterBot.Core;
+using TwitterBot.Core.Models;
+using TwitterBot.Web.Areas.Admin.Controllers;
 using TwitterBot.Web.Models;
 
 namespace TwitterBot.Web.Areas.Customer.Controllers
@@ -10,10 +12,13 @@ namespace TwitterBot.Web.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
