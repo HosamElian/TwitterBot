@@ -23,7 +23,7 @@ namespace BusinessLogic.Services
         }
         public void GetAllNewsFromApi(EverythingRequest newsRequest)
         {
-            var key = _configuration.GetSection(nameof(Shared.Keys_Holder)).GetSection(nameof(Shared.News_Key)).Value;
+            var key = _configuration.GetSection(Shared.Keys_Holder).GetSection(Shared.News_Key).Value;
          
             var newsApiClient = new NewsApiClient(key);
             var articlesResponse = newsApiClient.GetEverything(newsRequest);

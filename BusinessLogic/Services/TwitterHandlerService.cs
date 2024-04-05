@@ -18,10 +18,10 @@ namespace BusinessLogic.Services
         }
         public async Task<bool> PostTweet(PostTweetRequestDto postModel)
         {
-            var firstkey = _configuration.GetSection(nameof(Shared.Keys_Holder)).GetSection(nameof(Shared.TwitterFirstKey)).Value;
-            var secondkey = _configuration.GetSection(nameof(Shared.Keys_Holder)).GetSection(nameof(Shared.TwitterSecondKey)).Value;
-            var thirdkey = _configuration.GetSection(nameof(Shared.Keys_Holder)).GetSection(nameof(Shared.TwitterThirdKey)).Value;
-            var fourthkey = _configuration.GetSection(nameof(Shared.Keys_Holder)).GetSection(nameof(Shared.TwitterFourthKey)).Value;
+            var firstkey = _configuration.GetSection(Shared.Keys_Holder).GetSection(nameof(Shared.TwitterFirstKey)).Value;
+            var secondkey = _configuration.GetSection(Shared.Keys_Holder).GetSection(nameof(Shared.TwitterSecondKey)).Value;
+            var thirdkey = _configuration.GetSection(Shared.Keys_Holder).GetSection(nameof(Shared.TwitterThirdKey)).Value;
+            var fourthkey = _configuration.GetSection(Shared.Keys_Holder).GetSection(nameof(Shared.TwitterFourthKey)).Value;
 
             //var client = new TwitterClient("1763894308338278400-FIwb6caWaRAbgjc46lrfDvRy6rwUcN",
             //                                "LP9xvOhlyc2q0eCeykjqq3JbGBsk5ecxVl7qUsTRd264U",

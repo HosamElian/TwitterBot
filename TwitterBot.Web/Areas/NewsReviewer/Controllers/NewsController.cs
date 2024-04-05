@@ -29,10 +29,9 @@ namespace TwitterBot.Web.Areas.NewsReviewer.Controllers
         }
         public IActionResult Index()
         {
-            var news = _newsService.GetAllNewsFromDb(c => !c.IsApproved || !c.IsExpired);
-            return View(news);
+            var news = _newsService.GetAllNewsFromDb(c => !c.IsExpired);
+			return View(news);
         }
-        [HttpPost]
         public IActionResult Paraphrasing(int id)
         {
             var news = _unitOfWork.News.GetFirstOrDefualt(n => n.Id == id);
@@ -43,7 +42,6 @@ namespace TwitterBot.Web.Areas.NewsReviewer.Controllers
             _unitOfWork.SaveChanges();
             return Redirect(nameof(Index));
         }
-        [HttpPost]
         public IActionResult PostOnTwitter(int id)
         {
             var news = _unitOfWork.News.GetFirstOrDefualt(n => n.Id == id);
@@ -56,6 +54,7 @@ namespace TwitterBot.Web.Areas.NewsReviewer.Controllers
                 if (done)
                 {
                     news.IsApproved = true;
+                    news.IsExpired = true;
                     news.DecisionById = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     news.DecisionTime = DateTime.Now;
                 }
@@ -63,9 +62,9 @@ namespace TwitterBot.Web.Areas.NewsReviewer.Controllers
             }
             return Redirect(nameof(Index));
         }
-        [HttpPost]
         public IActionResult Rejected(int id)
         {
+            if(id == 0) return RedirectToAction("Index");
             var news = _unitOfWork.News.GetFirstOrDefualt(n => n.Id == id);
             if (news != null)
             {

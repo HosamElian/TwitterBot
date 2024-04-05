@@ -37,7 +37,7 @@ namespace BusinessLogic.Services
         }
         public async Task<bool> SendChatMessage(News news)
         {
-            var key = _configuration.GetSection(nameof(Shared.Keys_Holder)).GetSection(nameof(Shared.ChatGPT_Key)).Value;
+            var key = _configuration.GetSection(Shared.Keys_Holder).GetSection(Shared.ChatGPT_Key).Value;
 
             var openAI = new OpenAIAPI(new APIAuthentication(key));
             var convrsation = openAI.Chat.CreateConversation();
