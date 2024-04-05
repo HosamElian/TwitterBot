@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TwitterBot.Core.IRepository;
 using TwitterBot.Core.IServices;
+using TwitterBot.Core.Models;
 using TwitterBot.DataAccess.Data;
 using TwitterBot.DataAccess.Repository;
 
@@ -23,9 +24,11 @@ namespace TwitterBot.Web.Extensions
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddScoped<ISchedulerService, SchedulerService>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IChatGPTService, ChatGPTService>();

@@ -8,7 +8,8 @@ namespace TwitterBot.Core.IRepository
 {
     public interface IUnitOfWork
     {
-        public INewsRepository NewsRepository {  get; }
+        public INewsRepository News {  get; }
+        public IUserRepository User {  get; }
 
         public bool SaveChanges();
     }

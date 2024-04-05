@@ -1,6 +1,8 @@
-﻿using NewsAPI;
+﻿using Microsoft.Extensions.Configuration;
+using NewsAPI;
 using NewsAPI.Models;
 using System.Linq.Expressions;
+using TwitterBot.Core;
 using TwitterBot.Core.IRepository;
 using TwitterBot.Core.IServices;
 using TwitterBot.Core.Models;
@@ -11,14 +13,19 @@ namespace BusinessLogic.Services
     public class NewsService : INewsService
     {
         private readonly IUnitOfWork _unitOfWork;
+        IConfiguration _configuration;
 
-        public NewsService(IUnitOfWork unitOfWork)
+        public NewsService(IUnitOfWork unitOfWork,
+                        IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
         public void GetAllNewsFromApi(EverythingRequest newsRequest)
         {
-            var newsApiClient = new NewsApiClient("be15a946731948e58270aba6a6f80829");
+            var key = _configuration.GetSection(nameof(Shared.Keys_Holder)).GetSection(nameof(Shared.News_Key)).Value;
+         
+            var newsApiClient = new NewsApiClient(key);
             var articlesResponse = newsApiClient.GetEverything(newsRequest);
 
             if (articlesResponse.TotalResults == 0) return;
@@ -34,14 +41,14 @@ namespace BusinessLogic.Services
                 Title = a.Title,
                 CreatedTime = DateTime.Now,
             });
-            _unitOfWork.NewsRepository.AddRange(articles);
+            _unitOfWork.News.AddRange(articles);
             var saved = _unitOfWork.SaveChanges();
 
         }
 
         public IEnumerable<NewsVM>? GetAllNewsFromDb(Expression<Func<News, bool>> filter)
         {
-            return _unitOfWork.NewsRepository.GetAll(filter).Select(a => new NewsVM
+            return _unitOfWork.News.GetAll(filter).Select(a => new NewsVM
             {
                 Id = a.Id,
                 Author = a.Author,

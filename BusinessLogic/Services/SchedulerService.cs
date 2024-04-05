@@ -34,7 +34,7 @@ namespace BusinessLogic.Services
             });
 
 
-            var newsFromDB = _unitOfWork.NewsRepository.GetAll(c => !c.IsApproved && !c.IsExpired);
+            var newsFromDB = _unitOfWork.News.GetAll(c => !c.IsApproved && !c.IsExpired);
             if (newsFromDB == null) return;
             var formattednews = _chatGPTService.SendChatMessage(newsFromDB).Result;
         }
